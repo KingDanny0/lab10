@@ -32,7 +32,7 @@ class Dijkstra(graph: DirectedGraph, source: Vertex) extends IDijkstra {
       if (v == source) {
         distances(v) = 0.0
       } else {
-        distances(v) = Double.NegativeInfinity
+        distances(v) = Double.PositiveInfinity
       }
       val tup = (v, distances(v))
       pq += tup
@@ -43,10 +43,10 @@ class Dijkstra(graph: DirectedGraph, source: Vertex) extends IDijkstra {
       if (!alreadyDone.getOrElse(vert.id, false)) {
         alreadyDone(vert.id) = true
         for (edge <- vert.getNeighbors) {
-          val newEst = distances(vert) + dist
+          val newEst = distances(vert) + edge.weight
           if (newEst < distances(edge.target)) {
             distances(edge.target) = newEst
-            val newTuple = (edge.target, dist)
+            val newTuple = (edge.target, newEst)
             pq += newTuple
             parents(edge.target) = Some(vert)
           }
